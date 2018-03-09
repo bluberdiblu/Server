@@ -1,0 +1,7 @@
+/bin/
+.classpath
+.settings/
+.loadpath
+.metadata
+*.launch
+.project
