@@ -3,14 +3,30 @@ package server;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Scanner;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class Server {	
+
+
+public class Server extends Thread{	
 	ExecutorService executor;
-	ServerSocket server;
+	static ServerSocket server;
 	
-	public void start() {
+	@Override
+	public	void run() {
+		System.out.println("Type and enter to close Server");
+		Scanner scanner = new Scanner(System.in);
+		scanner.nextLine();
+		scanner.close();
+				
+		try {
+			server.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	public void go() {
 		System.out.println("Starting Server...");
 		executor = Executors.newFixedThreadPool(100);		
 		
@@ -30,5 +46,6 @@ public class Server {
 	
 	public static void main(String[] args) {
 		new Server().start();
+		new Server().go();
 	}
 }
