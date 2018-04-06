@@ -7,8 +7,6 @@ import java.util.Scanner;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-
-
 public class Server extends Thread{	
 	ExecutorService executor;
 	static ServerSocket server;
@@ -21,10 +19,11 @@ public class Server extends Thread{
 		scanner.close();
 				
 		try {
-			server.close();
+			if(server!=null) server.close();
 		} catch (IOException e) {
-			e.printStackTrace();
+			System.out.println("Server close exception");			
 		}
+		System.out.println("Console Closed!");
 	}
 	public void go() {
 		System.out.println("Starting Server...");
@@ -32,20 +31,24 @@ public class Server extends Thread{
 		
 		try {
 			server = new ServerSocket(5555);
-			
 			while(!server.isClosed()) {
 				Socket client = server.accept();
 				executor.execute(new Clienthandler(client));
 			}
+			executor.shutdown();
+			System.out.println("Server Closed");
 			
 		} catch (IOException e) {
-			e.printStackTrace();
+			shutdown();
+			System.exit(0);
 		}
 	}
-	
+	private void shutdown() {
+		//TODO
+	}	
 	
 	public static void main(String[] args) {
-		new Server().start();
-		new Server().go();
+		new Server().start();;
+		new Server().go();	
 	}
 }

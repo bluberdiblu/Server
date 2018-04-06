@@ -19,15 +19,17 @@ public class Client {
 			PrintWriter writer = new PrintWriter(out);
 			InputStream in = client.getInputStream();
 			BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-			
-			writer.write("Hallo Server!\n");
+						
+			String s = null;
+			while(!client.isClosed()&&((s = reader.readLine())!=null)) {
+				writer.write("Hallo Server!\n");
+				System.out.println(s);
+			}			
 			writer.flush();
-			
-
-			
+			client.close();		
 			
 		} catch (IOException e) {
-			e.printStackTrace();
+			System.out.println("Connection reset");
 		}
 		
 	}

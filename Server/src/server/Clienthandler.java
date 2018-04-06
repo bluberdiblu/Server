@@ -30,14 +30,13 @@ public class Clienthandler implements Runnable{
 			reader = new BufferedReader(new InputStreamReader(in));
 			
 			while(!client.isClosed()) {
-				writer.write("Hello, please Send a message back");
+				writer.write("Hello, please Send a message back\n");
 				writer.flush();
 				
 				String ClientMessage = null;
 				
 				while(!client.isClosed()&&(ClientMessage = reader.readLine())!=null) {
 					System.out.println(ClientMessage);
-					client.close();
 				}
 				
 			}
